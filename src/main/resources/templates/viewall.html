@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragment :: headFragment(title='View All Students')">
+</head>
+<body>
+	<div th:replace="fragments/fragment :: header"></div>
+	<div  class="container">
+		<h1>All Students</h1>
+		<table id="studentList" class="row-border hover stripe">
+       		<thead>
+                <tr>
+                    <th>No</th>
+                    <th>NPM</th>
+                    <th>Name</th>
+                    <th>GPA</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="student,iterationStatus: ${students}" th:class="${iterationStatus.odd} ? 'odd'">
+                    <td th:text="${iterationStatus.count}">No</td>
+                    <td th:text="${student.npm}">NPM</td>
+                    <td th:text="${student.name}">Name</td>
+                    <td th:text="${student.gpa}">GPA</td>
+                    <td th:text="${student.gpa>=3.49} ? 'Cum Laude !' : 'Excellent !'"></td>
+                    <td>
+                    		<a th:href="'/student/update/'+${student.npm}"><button class="btn btn-info">Update</button></a>
+                    		<a th:href="'/student/delete/'+${student.npm}"><button class="btn btn-danger">Delete</button></a>
+                    </td>
+                </tr>
+            </tbody>
+         </table> 
+	</div>
+		
+	<div th:replace="fragments/fragment :: footer"></div>
+	
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready( function () {
+               $('#studentList').DataTable();
+           } );
+	</script>
+</body>
+</html>
